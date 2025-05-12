@@ -9,7 +9,9 @@ export default function IntakeForm() {
     date_of_birth: '',
     contact_info: '',
     primary_symptom: '',
-    additional_symptoms: ''
+    additional_symptoms: '',
+    priority_level: 'Routine', // Default priority
+    department: 'General' // Default department
   });
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
@@ -47,7 +49,9 @@ export default function IntakeForm() {
         date_of_birth: '',
         contact_info: '',
         primary_symptom: '',
-        additional_symptoms: ''
+        additional_symptoms: '',
+        priority_level: 'Routine',
+        department: 'General'
       });
     } catch (err) {
       console.error('Error submitting check-in:', err);
@@ -176,6 +180,48 @@ export default function IntakeForm() {
                   value={formData.additional_symptoms}
                   onChange={(e) => setFormData({ ...formData, additional_symptoms: e.target.value })}
                 />
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="priority_level" className="block text-sm font-medium text-gray-700">
+                Priority Level
+              </label>
+              <div className="mt-1">
+                <select
+                  id="priority_level"
+                  name="priority_level"
+                  required
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  value={formData.priority_level}
+                  onChange={(e) => setFormData({ ...formData, priority_level: e.target.value })}
+                >
+                  <option value="Emergency">Emergency</option>
+                  <option value="Urgent">Urgent</option>
+                  <option value="Routine">Routine</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="department" className="block text-sm font-medium text-gray-700">
+                Department
+              </label>
+              <div className="mt-1">
+                <select
+                  id="department"
+                  name="department"
+                  required
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  value={formData.department}
+                  onChange={(e) => setFormData({ ...formData, department: e.target.value })}
+                >
+                  <option value="General">General</option>
+                  <option value="Pediatrics">Pediatrics</option>
+                  <option value="Emergency">Emergency</option>
+                  <option value="Cardiology">Cardiology</option>
+                  <option value="Orthopedics">Orthopedics</option>
+                </select>
               </div>
             </div>
 

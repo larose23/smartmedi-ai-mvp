@@ -1,0 +1,3 @@
+export default function SymptomDistributionChart() {
+  return <div>SymptomDistributionChart placeholder</div>;
+}

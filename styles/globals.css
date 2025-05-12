@@ -1,0 +1,102 @@
+/* Keyboard Navigation */
+:focus-visible {
+  outline: 3px solid #4a90e2 !important;
+  outline-offset: 2px !important;
+}
+
+/* Ensure interactive elements are keyboard accessible */
+button,
+[role="button"],
+a,
+input,
+select,
+textarea {
+  cursor: pointer;
+}
+
+/* Ensure sufficient color contrast */
+.text-gray-500 {
+  color: #6b7280 !important;
+}
+
+.text-gray-600 {
+  color: #4b5563 !important;
+}
+
+/* Ensure sufficient touch targets */
+button,
+[role="button"],
+a,
+input[type="checkbox"],
+input[type="radio"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Ensure form controls are accessible */
+input,
+select,
+textarea {
+  min-height: 44px;
+  padding: 0.5rem;
+}
+
+/* Ensure sufficient spacing for touch targets */
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+
+/* Ensure sufficient text contrast */
+.text-white {
+  color: #ffffff !important;
+}
+
+.text-black {
+  color: #000000 !important;
+}
+
+/* Ensure sufficient background contrast */
+.bg-white {
+  background-color: #ffffff !important;
+}
+
+.bg-black {
+  background-color: #000000 !important;
+}
+
+/* Ensure sufficient border contrast */
+.border {
+  border-color: #e5e7eb !important;
+}
+
+/* Ensure sufficient hover states */
+.hover\:bg-blue-600:hover {
+  background-color: #2563eb !important;
+}
+
+.hover\:bg-gray-300:hover {
+  background-color: #d1d5db !important;
+}
+
+/* Ensure sufficient focus states */
+.focus\:ring-2:focus {
+  box-shadow: 0 0 0 2px #4a90e2 !important;
+}
+
+.focus\:outline-none:focus {
+  outline: none !important;
+}
+
+/* Ensure sufficient active states */
+.active\:bg-blue-700:active {
+  background-color: #1d4ed8 !important;
+}
+
+/* Ensure sufficient disabled states */
+.disabled\:opacity-50:disabled {
+  opacity: 0.5 !important;
+}
+
+.disabled\:cursor-not-allowed:disabled {
+  cursor: not-allowed !important;
+} 

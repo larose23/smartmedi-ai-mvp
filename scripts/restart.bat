@@ -1,0 +1,9 @@
+@echo off
+echo Stopping any running Next.js servers...
+taskkill /f /im node.exe
+
+echo Applying database migrations...
+npx supabase migration up
+
+echo Starting Next.js server...
+npm run dev 

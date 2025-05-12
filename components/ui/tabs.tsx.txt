@@ -1,0 +1,3 @@
+export default function Tabs(props: any) {
+  return <div {...props}>{props.children || "Tabs"}</div>;
+}

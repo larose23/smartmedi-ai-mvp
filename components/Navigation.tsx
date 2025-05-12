@@ -17,6 +17,14 @@ export default function Navigation({ className = '' }: NavigationProps) {
                 SmartMedi AI
               </Link>
             </div>
+            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+              <Link
+                href="/dashboard"
+                className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+              >
+                Dashboard
+              </Link>
+            </div>
           </div>
           <div className="flex items-center">
             <Link 

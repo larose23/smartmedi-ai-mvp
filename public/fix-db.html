@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SmartMedi Database Fix</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .result {
+      margin-top: 16px;
+      padding: 8px;
+      border-radius: 4px;
+    }
+    .success {
+      background-color: #dff0d8;
+      color: #3c763d;
+    }
+    .error {
+      background-color: #f2dede;
+      color: #a94442;
+    }
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(0,0,0,.3);
+      border-radius: 50%;
+      border-top-color: #4CAF50;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <h1>SmartMedi Database Fix</h1>
+  <p>Click the button below to fix the database schema issues:</p>
+  
+  <div class="card">
+    <button id="fixButton" class="button">Fix Database Schema</button>
+    <div id="result" class="result" style="display: none;"></div>
+  </div>
+
+  <div class="card">
+    <h3>Issues Fixed:</h3>
+    <ul>
+      <li>Missing <code>first_name</code> column in <code>patients</code> table</li>
+      <li>Missing <code>contact_info</code> column in <code>patients</code> table</li>
+      <li>Missing or corrupted tables and relationships</li>
+    </ul>
+  </div>
+
+  <script>
+    document.getElementById('fixButton').addEventListener('click', async function() {
+      const resultDiv = document.getElementById('result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = '<div class="loading"></div> Fixing database schema...';
+      resultDiv.className = 'result';
+      
+      try {
+        const response = await fetch('/api/db-fix/appointments');
+        const data = await response.json();
+        
+        if (data.success) {
+          resultDiv.innerHTML = '✅ ' + (data.message || 'Database fixed successfully!');
+          resultDiv.className = 'result success';
+        } else {
+          resultDiv.innerHTML = '❌ ' + (data.error || 'Failed to fix database');
+          resultDiv.className = 'result error';
+        }
+      } catch (error) {
+        resultDiv.innerHTML = '❌ Error: ' + (error.message || 'Failed to fix database');
+        resultDiv.className = 'result error';
+      }
+    });
+  </script>
+</body>
+</html> 

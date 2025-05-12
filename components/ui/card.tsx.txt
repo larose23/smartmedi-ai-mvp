@@ -1,0 +1,7 @@
+export default function Card(props: any) {
+  return (
+    <div {...props} style={{ border: "1px solid #ccc", padding: 16 }}>
+      {props.children || "Card"}
+    </div>
+  );
+}

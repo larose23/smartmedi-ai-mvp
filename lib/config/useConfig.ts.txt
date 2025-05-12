@@ -1,0 +1,13 @@
+export default function useConfig() {
+  return {
+    config: {
+      app: {
+        NAME: "SmartMedi AI",
+        DEBUG_MODE: false,
+        LOG_LEVEL: "info",
+        URL: "http://localhost:3000"
+      }
+    },
+    environment: "development"
+  };
+}
