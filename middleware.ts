@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { validateApiKey } from './lib/supabase';
 import { rateLimit } from './lib/security/rateLimit';
-import { setCSRFTokenCookie, validateCSRFToken } from './lib/security/csrf';
+import { setCSRFTokenCookie, validateCSRFToken } from './lib/security/csrf.server';
 import { ipBlocker, checkAndRecordIP } from './lib/security/ipBlock';
 import { securityLogger, logAuthEvent, logApiEvent, logSecurityViolation, logRateLimitExceeded } from './lib/security/logger';
 import { rbac, Permission } from './lib/security/roles';

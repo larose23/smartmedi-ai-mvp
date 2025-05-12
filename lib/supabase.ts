@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
+import { createServerClient } from '@supabase/ssr';
 import { config } from './config';
 
 const supabaseUrl = config.services.SUPABASE_URL;
@@ -71,50 +71,9 @@ const enhancedFetch = async (url: string, options: RequestInit) => {
 };
 
 // Create the Supabase client with all required options and enhanced fetch
-export const supabase = createClient(
-  supabaseUrl,
-  supabaseAnonKey,
-  {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-      detectSessionInUrl: true,
-      storage: typeof window !== 'undefined' ? window.localStorage : undefined,
-      flowType: 'pkce', // Use PKCE flow for enhanced security
-      debug: process.env.NODE_ENV === 'development',
-      cookieOptions: {
-        name: 'sb-auth-token',
-        lifetime: 3600, // 1 hour
-        domain: process.env.NEXT_PUBLIC_APP_URL ? new URL(process.env.NEXT_PUBLIC_APP_URL).hostname : undefined,
-        path: '/',
-        sameSite: 'lax',
-        secure: process.env.NODE_ENV === 'production',
-      },
-    },
-    global: {
-      fetch: enhancedFetch,
-      headers: {
-        'x-application-name': 'smartmedi-ai',
-        'x-application-version': process.env.NEXT_PUBLIC_APP_VERSION || '1.0.0',
-      },
-    },
-    realtime: {
-      params: {
-        eventsPerSecond: 10
-      }
-    },
-    db: {
-      schema: 'public',
-    },
-    // Add request timeouts and retry logic
-    queries: {
-      headers: {
-        'x-connection-tag': 'smartmedi-app'
-      },
-      retryCount: 3,
-      retryInterval: 1000,
-    }
-  }
+export const supabase = createServerClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
 // Function to check database connection health
