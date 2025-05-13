@@ -1,4 +1,4 @@
-import { supabase } from '../supabaseClient';
+import { supabase } from '@/lib/supabase/client';
 import { hipaaAuditLogger, PHICategory } from '../security/hipaa/audit';
 import { Configuration, OpenAIApi } from 'openai';
 import { createClient } from '@supabase/supabase-js';
