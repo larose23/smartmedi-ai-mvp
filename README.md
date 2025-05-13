@@ -287,3 +287,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - A comprehensive clinical reference PDF is available in the `docs/` folder (`docs/CLINICAL_REFERENCE.pdf`).
 - This document includes clinical guidelines, flowcharts, and reference tables to support decision-making.
+
