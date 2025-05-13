@@ -30,7 +30,6 @@ import {
 import { useDebounce } from '@/hooks/useDebounce';
 import { PatientSearchService, SearchResult, SearchSuggestion } from '@/lib/services/PatientSearchService';
 import { format } from 'date-fns';
-import { useSession } from 'next-auth/react';
 
 interface PatientSearchProps {
     patientId: string;
@@ -41,7 +40,6 @@ export const PatientSearch: React.FC<PatientSearchProps> = ({
     patientId,
     onResultSelect,
 }) => {
-    const { data: session } = useSession();
     const [query, setQuery] = useState('');
     const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
     const [results, setResults] = useState<SearchResult[]>([]);
@@ -100,22 +98,6 @@ export const PatientSearch: React.FC<PatientSearchProps> = ({
                 }
             );
             setResults(searchResults);
-
-            // Save search history
-            if (session?.user?.id) {
-                await PatientSearchService.saveSearchHistory(
-                    patientId,
-                    session.user.id,
-                    query,
-                    {
-                        type: selectedTypes.length > 0 ? selectedTypes : undefined,
-                        dateRange: dateRange.start && dateRange.end
-                            ? { start: dateRange.start, end: dateRange.end }
-                            : undefined,
-                        categories: selectedCategories.length > 0 ? selectedCategories : undefined,
-                    }
-                );
-            }
         } catch (error) {
             console.error('Error performing search:', error);
         } finally {
@@ -153,7 +135,7 @@ export const PatientSearch: React.FC<PatientSearchProps> = ({
             case 'lab':
                 return <LabIcon />;
             default:
-                return <DescriptionIcon />;
+                return <NoteIcon />;
         }
     };
 

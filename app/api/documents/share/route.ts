@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { DocumentExportService } from '@/lib/services/DocumentExportService';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
 import { supabase } from '@/lib/supabaseClient';
 
 export async function POST(req: NextRequest) {

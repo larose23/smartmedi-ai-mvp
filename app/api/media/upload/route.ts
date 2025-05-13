@@ -1,18 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
 import { MediaManagementService } from '@/lib/services/MediaManagementService';
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
     const formData = await request.formData();
     const file = formData.get('file') as File;
     const patientId = formData.get('patientId') as string;
@@ -43,14 +33,6 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
     const searchParams = request.nextUrl.searchParams;
     const patientId = searchParams.get('patientId');
     const encounterId = searchParams.get('encounterId');
@@ -75,14 +57,6 @@ export async function GET(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
     const searchParams = request.nextUrl.searchParams;
     const mediaId = searchParams.get('mediaId');
 
