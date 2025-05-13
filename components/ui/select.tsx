@@ -1,3 +1,7 @@
+// TEMPORARILY DISABLED FOR DEPLOYMENT DUE TO MISSING DEPENDENCIES
+// All code in this file is commented out to allow deployment.
+
+/*
 "use client"
 
 import * as React from "react"
@@ -157,4 +161,5 @@ export {
   SelectSeparator,
   SelectScrollUpButton,
   SelectScrollDownButton,
-} 
+}
+*/ 

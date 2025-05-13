@@ -208,7 +208,7 @@ export class ApiClient {
         monitoringService.trackCache(cacheKey, false);
       }
 
-      const response = await this.executeFetch<T>(fullUrl, config, cacheKey, config.cache);
+      let response = await this.executeFetch<T>(fullUrl, config, cacheKey, config.cache);
       this.logger.endTimer(operationId, `Request completed: ${method} ${url}`, {
         status: response.status,
         cached: !!cachedData
