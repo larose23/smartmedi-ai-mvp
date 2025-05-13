@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { validateApiKey } from './lib/supabase';
 import { rateLimit } from './lib/security/rateLimit';
-import { setCSRFTokenCookie, validateCSRFToken } from './lib/security/csrf-server';
+import { setCSRFTokenCookie, validateCSRFToken } from './lib/security/csrf-middleware';
 import { ipBlocker, checkAndRecordIP } from './lib/security/ipBlock';
 import { securityLogger, logAuthEvent, logApiEvent, logSecurityViolation, logRateLimitExceeded } from './lib/security/logger';
 import { rbac, Permission } from './lib/security/roles';
@@ -92,7 +92,7 @@ export async function middleware(request: NextRequest) {
   if (CSRF_PROTECTED_PATHS.some(path => request.nextUrl.pathname.startsWith(path))) {
     if (request.method !== 'GET') {
       const csrfToken = request.headers.get('x-csrf-token');
-      if (!csrfToken || !validateCSRFToken(csrfToken)) {
+      if (!csrfToken || !validateCSRFToken(csrfToken, request)) {
         logSecurityViolation('Invalid CSRF token', { ip, path: request.nextUrl.pathname });
         checkAndRecordIP(ip, 'Invalid CSRF token');
         return new NextResponse(

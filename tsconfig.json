@@ -26,7 +26,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "src/*"
+        "./*"
       ]
     },
     "incremental": true,
@@ -37,7 +37,7 @@
     ]
   },
   "include": [
-    "src",
+    ".",
     ".next/types/**/*.ts"
   ],
   "references": [
