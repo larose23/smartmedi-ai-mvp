@@ -1,3 +1,7 @@
+// TEMPORARILY DISABLED FOR DEPLOYMENT DUE TO MISSING DEPENDENCIES
+// All code in this file is commented out to allow deployment.
+
+/*
 import * as React from "react"
 import * as LabelPrimitive from "@radix-ui/react-label"
 import { cn } from "@/lib/utils"
@@ -17,4 +21,5 @@ const Label = React.forwardRef<
 ))
 Label.displayName = LabelPrimitive.Root.displayName
 
-export { Label } 
+export { Label }
+*/ 
