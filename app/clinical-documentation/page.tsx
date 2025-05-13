@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import ClinicalNoteEditor from '@/components/ClinicalNoteEditor';
-import NoteTemplateManager from '@/components/NoteTemplateManager';
+import ClinicalNoteEditor from '../components/ClinicalNoteEditor';
+import NoteTemplateManager from '../components/NoteTemplateManager';
 import type { ClinicalNote } from '@/lib/services/ClinicalDocumentService';
 
 export default function ClinicalDocumentationPage() {

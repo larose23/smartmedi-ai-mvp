@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { DocumentExportService } from '@/lib/services/DocumentExportService';
-import { supabase } from '@/lib/supabaseClient';
+import { supabase } from '@/lib/supabase/client';
 
 export async function POST(req: NextRequest) {
     try {

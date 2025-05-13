@@ -3,7 +3,7 @@
 import React from 'react';
 import ConfigPanel from '../../components/ConfigPanel';
 import { ConfigContext } from '../../../../lib/config/ConfigContext';
-import useConfig from '../../../../lib/config/useConfig';
+import useConfig from '@/lib/config/useConfig.ts.txt';
 import Link from 'next/link';
 
 export default function ConfigurationPage() {
