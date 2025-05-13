@@ -60,7 +60,7 @@ export async function GET() {
 
     // Step 1: Get all patients who have appointments but are not in the archive
     console.log('[Direct Archive Transfer] Getting patients with appointments');
-    const { data: appointments, error: appointmentsError } = await supabase
+    let { data: appointments, error: appointmentsError } = await supabase
       .from('appointments')
       .select('id, patient_id, appointment_date, status')
       .order('appointment_date', { ascending: false });
@@ -72,7 +72,7 @@ export async function GET() {
       if (appointmentsError.message.includes('department does not exist')) {
         // Try again without the department column
         console.log('[Direct Archive Transfer] Retrying without department column');
-        const { data: retryAppointments, error: retryError } = await supabase
+        let { data: retryAppointments, error: retryError } = await supabase
           .from('appointments')
           .select('id, patient_id, appointment_date, status')
           .order('appointment_date', { ascending: false });

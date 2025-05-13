@@ -3,11 +3,6 @@ import { DocumentExchangeService } from '@/lib/services/DocumentExchangeService'
 
 export async function POST(req: NextRequest) {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
-
         const body = await req.json();
         const {
             sourceSystem,
@@ -46,11 +41,6 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
-
         const searchParams = req.nextUrl.searchParams;
         const id = searchParams.get('id');
         const query = searchParams.get('query') || '';
@@ -83,11 +73,6 @@ export async function GET(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
-
         const body = await req.json();
         const { id, status, metadata } = body;
 
@@ -116,11 +101,6 @@ export async function PUT(req: NextRequest) {
 
 export async function PATCH(req: NextRequest) {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
-
         const body = await req.json();
         const { documentId, content, metadata } = body;
 

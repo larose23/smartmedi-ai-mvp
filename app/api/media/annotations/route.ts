@@ -3,14 +3,6 @@ import { MediaManagementService } from '@/lib/services/MediaManagementService';
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
     const body = await request.json();
     const { mediaId, type, coordinates, label, color, notes } = body;
 
@@ -42,14 +34,6 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
     const searchParams = request.nextUrl.searchParams;
     const mediaId = searchParams.get('mediaId');
 
@@ -73,14 +57,6 @@ export async function GET(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
     const searchParams = request.nextUrl.searchParams;
     const annotationId = searchParams.get('annotationId');
 

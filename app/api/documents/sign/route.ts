@@ -3,11 +3,6 @@ import { DocumentExportService } from '@/lib/services/DocumentExportService';
 
 export async function POST(req: NextRequest) {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
-
         const body = await req.json();
         const { documentId, signatureData, metadata } = body;
 
@@ -20,7 +15,6 @@ export async function POST(req: NextRequest) {
 
         const signature = await DocumentExportService.addElectronicSignature(
             documentId,
-            session.user.id,
             signatureData,
             metadata
         );
@@ -37,11 +31,6 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
-
         const searchParams = req.nextUrl.searchParams;
         const signatureId = searchParams.get('id');
 
