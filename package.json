@@ -45,6 +45,7 @@
     "date-fns": "^2.30.0",
     "fhir.js": "^0.0.22",
     "hl7": "^0.0.0",
+    "jsbayes": "^0.1.0",
     "jspdf": "^3.0.1",
     "jspdf-autotable": "^5.0.2",
     "lucide-react": "^0.510.0",
