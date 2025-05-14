@@ -20,9 +20,8 @@ interface RequestConfig extends RequestInit {
   params?: Record<string, string>;
   retries?: number;
   retryDelay?: number;
-  cache?: boolean;
+  cache?: RequestCache;
   cacheKey?: string;
-  cacheTTL?: number; // Time-to-live in milliseconds
   headers?: Record<string, string>;
   withCredentials?: boolean;
 }
@@ -164,8 +163,8 @@ export class ApiClient {
         },
         retries: requestConfig.retries !== undefined ? requestConfig.retries : this.retries,
         retryDelay: requestConfig.retryDelay !== undefined ? requestConfig.retryDelay : this.retryDelay,
-        cache: requestConfig.cache !== undefined ? requestConfig.cache : true,
-        cacheTTL: requestConfig.cacheTTL !== undefined ? requestConfig.cacheTTL : this.cacheTTL,
+        cache: requestConfig.cache !== undefined ? requestConfig.cache : 'default',
+        cacheKey: requestConfig.cacheKey,
         ...requestConfig
       };
 
@@ -176,43 +175,8 @@ export class ApiClient {
         config = result.config;
       }
 
-      // Handle caching for GET requests
-      if (method === 'GET' && config.cache) {
-        const cacheKey = config.cacheKey || `${method}:${fullUrl}:${JSON.stringify(config.body)}`;
-        
-        if (this.cache.config.strategy === 'stale-while-revalidate') {
-          const result = await this.cache.handleStaleWhileRevalidate(
-            cacheKey,
-            () => this.executeFetch<T>(fullUrl, config, cacheKey, true),
-            {
-              etag: config.headers?.['If-None-Match'],
-              lastModified: config.headers?.['If-Modified-Since']
-            }
-          );
-
-          // Track cache performance
-          monitoringService.trackCache(cacheKey, result.fromCache);
-          monitoringService.trackRequest(method, url, startTime);
-
-          return result.data;
-        }
-
-        const cachedData = this.cache.get<T>(cacheKey);
-        if (cachedData) {
-          this.logger.log('debug', `Cache hit for ${cacheKey}`);
-          monitoringService.trackCache(cacheKey, true);
-          monitoringService.trackRequest(method, url, startTime);
-          return cachedData;
-        }
-
-        monitoringService.trackCache(cacheKey, false);
-      }
-
-      let response = await this.executeFetch<T>(fullUrl, config, cacheKey, config.cache);
-      this.logger.endTimer(operationId, `Request completed: ${method} ${url}`, {
-        status: response.status,
-        cached: !!cachedData
-      });
+      let response = await this.executeFetch<T>(fullUrl, config, config.cacheKey || `${method}:${fullUrl}:${JSON.stringify(config.body)}`);
+      this.logger.endTimer(operationId, `Request completed: ${method} ${url}`);
 
       monitoringService.trackRequest(method, url, startTime);
       return response;
@@ -232,8 +196,7 @@ export class ApiClient {
   private async executeFetch<T>(
     url: string,
     config: RequestConfig,
-    cacheKey: string,
-    shouldCache: boolean
+    cacheKey: string
   ): Promise<T> {
     let retries = config.retries || 0;
     let lastError: Error | null = null;
@@ -244,7 +207,7 @@ export class ApiClient {
           await new Promise(resolve => setTimeout(resolve, config.retryDelay! * attempt));
         }
 
-        const response = await fetch(url, config);
+        let response = await fetch(url, config);
         
         for (const interceptor of this.responseInterceptors) {
           response = await interceptor(response, { url, config });
@@ -270,13 +233,6 @@ export class ApiClient {
         }
 
         const data = await response.json();
-
-        if (shouldCache) {
-          this.cache.set(cacheKey, data, {
-            etag: response.headers.get('ETag') || undefined,
-            lastModified: response.headers.get('Last-Modified') || undefined
-          });
-        }
 
         return data;
       } catch (error) {
@@ -359,10 +315,9 @@ export class ApiClient {
 
 // Create default interceptors
 const defaultRequestInterceptor: RequestInterceptor = (url, config) => {
-  // Add app version header
   config.headers = {
     ...config.headers,
-    'X-App-Version': config.app?.ENV || 'development'
+    'X-App-Version': 'development', // fallback to a static value
   };
   return { url, config };
 };
