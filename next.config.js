@@ -5,7 +5,8 @@ const withPWA = require('next-pwa')({
   disable: process.env.NODE_ENV === 'development'
 });
 
-const { withSentryConfig } = require('@sentry/nextjs');
+// Comment out or remove Sentry integration for now
+// const { withSentryConfig } = require('@sentry/nextjs');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -86,18 +87,24 @@ const nextConfig = {
 };
 
 // Sentry configuration
-const sentryConfig = {
-  silent: true,
-  org: "smartmedi",
-  project: "smartmedi-ai",
-  hideSourceMaps: true,
-  widenClientFileUpload: true,
-  transpileClientSDK: true,
-  tunnelRoute: "/monitoring",
-  hideSourceMaps: true,
-};
+// const sentryConfig = {
+//   silent: true,
+//   org: "smartmedi",
+//   project: "smartmedi-ai",
+//   hideSourceMaps: true,
+//   widenClientFileUpload: true,
+//   transpileClientSDK: true,
+//   tunnelRoute: "/monitoring",
+//   hideSourceMaps: true,
+// };
 
-module.exports = withSentryConfig(
-  withPWA(nextConfig),
-  sentryConfig
-); 
+// Comment out or remove Sentry integration for now
+// module.exports = withSentryConfig(
+//   withPWA(nextConfig),
+//   sentryConfig
+// );
+
+// If you have a plain next config, just export it:
+module.exports = {
+  // ...yourNextConfig (keep your existing config here)
+}; 
